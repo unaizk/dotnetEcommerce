@@ -12,7 +12,10 @@ namespace dotnetEcommerce.Data{
             _database = client.GetDatabase(settings.Value.DatabaseName);
         }
 
-        
+        public IMongoCollection<User> User => _database.GetCollection<User>("Users");
+        public IMongoCollection<Product> Product => _database.GetCollection<Product>("Products");
+        public IMongoCollection<Cart> Cart => _database.GetCollection<Cart>("Carts");
+        public IMongoCollection<Order> Order => _database.GetCollection<Order>("Orders");
     }
 
 }
