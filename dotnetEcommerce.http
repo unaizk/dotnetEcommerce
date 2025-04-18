@@ -1,0 +1,6 @@
+@dotnetEcommerce_HostAddress = http://localhost:5030
+
+GET {{dotnetEcommerce_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
