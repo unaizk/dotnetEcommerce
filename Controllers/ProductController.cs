@@ -16,6 +16,15 @@ public class ProductController : ControllerBase
         _context = context;
     }
 
+    // GET: api/product
+    [HttpGet]
+    public IActionResult GetAllProducts()
+    {
+        var products = _context.Product.Find(_ => true).ToList();
+        return Ok(products);
+    }
+
+
     // POST: api/product
     [HttpPost]
     public IActionResult AddProduct([FromBody] Product product)
@@ -53,5 +62,21 @@ public class ProductController : ControllerBase
 
         return Ok(new { message = "Product updated successfully." });
     }
+
+    // DELETE: api/product/{id}
+    [HttpDelete("{id}")]
+    public IActionResult DeleteProduct(string id)
+    {
+        var filter = Builders<Product>.Filter.Eq(p => p.Id, id);
+        var result = _context.Product.DeleteOne(filter);
+
+        if (result.DeletedCount == 0)
+        {
+            return NotFound(new { message = "Product not found or already deleted." });
+        }
+
+        return Ok(new { message = "Product deleted successfully." });
+    }
+
 
 }
