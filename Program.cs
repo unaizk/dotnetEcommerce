@@ -2,18 +2,21 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using dotnetEcommerce.Models;
+using dotnetEcommerce.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Register MongoDB & JWT settings
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDBSettings"));
-
-// Load JWT settings
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+
+
+// Load JWT settings to use in auth setup
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>()!;
-
-
 var key = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
 
+
+// JWT authentication setup
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -36,6 +39,9 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddControllers(); // Enable controller DI
+builder.Services.AddSingleton<MongoDBContext>(); // Register MongoDBContext
+
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -50,5 +56,6 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapControllers(); // Map routes for controllers
 
 app.Run();

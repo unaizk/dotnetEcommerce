@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "yte++xojwHsRBozZFteyV8nDppioCN6jjitnuN56xHc=",
+  "Source": "dotnetEcommerce",
+  "BasePath": "_content/dotnetEcommerce",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
